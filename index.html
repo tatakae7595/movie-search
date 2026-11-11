@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html><head>
+    <title>Harry Potter Collection</title>
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: Arial;
+            padding: 20px;
+        }
+
+        h1, .search {
+            text-align: center;
+            color: #e5bd65;
+        }
+
+        input, button {
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #b58b36;
+            color: white;
+            cursor: pointer;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .movie {
+            background: #222;
+            text-align: center;
+            border-radius: 10px;
+            overflow: hidden;
+            padding-bottom: 12px;
+        }
+
+        .movie img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .movie h3 {
+            color: #e5bd65;
+            padding: 0 8px;
+        }
+
+        #message {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>⚡ Harry Potter Collection ⚡</h1>
+    <p class="search">Welcome to the Wizarding World!</p>
+
+    <div class="search">
+        <input id="search" placeholder="Search movie...">
+        <button onclick="showMovies()">Search</button>
+    </div>
+
+    <div class="container" id="movies"></div>
+    <p id="message"></p>
+
+    <script>
+
+        const movies = [
+            ["Harry Potter and the Philosopher's Stone", 2001, "wuMc08IPKEatf9rnMNXvIDxqP4W"],
+            ["Harry Potter and the Chamber of Secrets", 2002, "sdEOH0992YZ0QSxgXNIGLq1ToUi"],
+            ["Harry Potter and the Prisoner of Azkaban", 2004, "aWxwnYoe8p2d2fcxOqtvAtJ72Rw"],
+            ["Harry Potter and the Goblet of Fire", 2005, "fECBtHlr0RB3foNHDiCBXeg9Bv9"],
+            ["Harry Potter and the Order of the Phoenix", 2007, "5aOyriWkPec0zUDxmHFP9qMmBaj"],
+            ["Harry Potter and the Half-Blood Prince", 2009, "z7uo9zmQdQwU5ZJHFpv2Upl30i1"],
+            ["Harry Potter and the Deathly Hallows Part 1", 2010, "iGoXIpQb7Pot00EEdwpwPajheZ5"],
+            ["Harry Potter and the Deathly Hallows Part 2", 2011, "da22ZBmrDOXOCDRvr8Gic8ldhv4"]
+        ];
+
+        function showMovies() {
+
+            let value = document.getElementById("search").value.toLowerCase();
+
+            let result = movies.filter(movie =>
+                movie[0].toLowerCase().includes(value)
+            );
+
+            document.getElementById("movies").innerHTML = "";
+
+            result.forEach(movie => {
+
+                let div = document.createElement("div");
+
+                div.className = "movie";
+
+                div.innerHTML = `
+                    <img src="https://image.tmdb.org/t/p/w500/${movie[2]}.jpg"
+                    alt="${movie[0]}"
+                    onerror="this.src='https://placehold.co/300x450/222/ffffff?text=Poster+Unavailable'">
+
+                    <h3>${movie[0]}</h3>
+                    <p>Release Year: ${movie[1]}</p>
+                `;
+
+                document.getElementById("movies").appendChild(div);
+
+            });
+
+            document.getElementById("message").innerText =
+                result.length === 0 ? "No movie found!" : "";
+        }
+
+        document.getElementById("search").addEventListener("input", showMovies);
+
+        showMovies();
+
+    </script>
+
+</body>
+</html>
